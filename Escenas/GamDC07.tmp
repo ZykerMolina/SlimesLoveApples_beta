@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://grh76br0fues"]
+
+[ext_resource type="Script" path="res://Scripts/Level_Manager.gd" id="1_insf7"]
+[ext_resource type="Resource" uid="uid://dtpcqb8o7ubie" path="res://resource_group_scene.tres" id="2_bufwm"]
+[ext_resource type="PackedScene" uid="uid://jdfq4w01514t" path="res://Escenas/slime_player.tscn" id="2_lynkq"]
+[ext_resource type="PackedScene" uid="uid://dicutu4xwo3x6" path="res://Escenas/Levels/nivel_1.tscn" id="3_aneg8"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Level_Manager" type="Node2D" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("1_insf7")
+player = NodePath("../Slime_player")
+levels_resource_group = ExtResource("2_bufwm")
+instanceLevel = ExtResource("3_aneg8")
+
+[node name="Slime_player" parent="." instance=ExtResource("2_lynkq")]
+position = Vector2(2.75076, 0.563606)
+
+[node name="Settings" type="Node2D" parent="."]
+
+[node name="GUI" type="CanvasLayer" parent="."]

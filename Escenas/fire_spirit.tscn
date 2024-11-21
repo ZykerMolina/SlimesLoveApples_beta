@@ -1,0 +1,277 @@
+[gd_scene load_steps=22 format=3 uid="uid://dwysh1syqdlym"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy_Scripts/Fire_Spirit/fire_spirit.gd" id="1_04olc"]
+[ext_resource type="Texture2D" uid="uid://cyr3usfqpvmcc" path="res://Recursos/Personajes/Fire_Spirit/fireSpirit_v2.png" id="1_hxygy"]
+[ext_resource type="Script" path="res://Scripts/Player_Scripts/State_Machine/stateMachine.gd" id="3_ybn8k"]
+[ext_resource type="Script" path="res://Scripts/Enemy_Scripts/Fire_Spirit/State_Machine/lookaround.gd" id="4_oo2kn"]
+[ext_resource type="Script" path="res://Scripts/Enemy_Scripts/Fire_Spirit/State_Machine/stalk.gd" id="5_f6vik"]
+[ext_resource type="Script" path="res://Scripts/Enemy_Scripts/Fire_Spirit/State_Machine/reach.gd" id="6_x2ved"]
+[ext_resource type="Script" path="res://Scripts/Enemy_Scripts/Fire_Spirit/State_Machine/explode.gd" id="7_6sag5"]
+[ext_resource type="Script" path="res://Scripts/Enemy_Scripts/Fire_Spirit/State_Machine/rebirth.gd" id="9_xuayx"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j4llt"]
+radius = 12.0
+height = 25.0
+
+[sub_resource type="Animation" id="Animation_oi7xy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [20]
+}
+
+[sub_resource type="Animation" id="Animation_ldra3"]
+resource_name = "attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97]
+}
+
+[sub_resource type="Animation" id="Animation_npfbv"]
+resource_name = "count"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [80, 79, 78, 77, 76, 75, 74, 73, 72, 71]
+}
+
+[sub_resource type="Animation" id="Animation_7x7l1"]
+resource_name = "explosion"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [57, 58, 59, 60, 61, 62, 63, 64, 65, 9, 10]
+}
+
+[sub_resource type="Animation" id="Animation_hhpr1"]
+resource_name = "idle"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [14, 15, 16, 17, 18, 19]
+}
+
+[sub_resource type="Animation" id="Animation_vl1w1"]
+resource_name = "respawn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [11, 10, 9, 8, 7, 14]
+}
+
+[sub_resource type="Animation" id="Animation_8dcut"]
+resource_name = "walk"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [20, 21, 22, 23, 24]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xqmf8"]
+_data = {
+"RESET": SubResource("Animation_oi7xy"),
+"attack": SubResource("Animation_ldra3"),
+"count": SubResource("Animation_npfbv"),
+"explosion": SubResource("Animation_7x7l1"),
+"idle": SubResource("Animation_hhpr1"),
+"respawn": SubResource("Animation_vl1w1"),
+"walk": SubResource("Animation_8dcut")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_023ph"]
+radius = 13.8067
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kquu3"]
+radius = 198.966
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_v670a"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/0/watch = false
+properties/1/path = NodePath("Sprite2D:flip_h")
+properties/1/spawn = true
+properties/1/sync = true
+properties/1/watch = false
+properties/2/path = NodePath("AnimationPlayer:current_animation")
+properties/2/spawn = true
+properties/2/sync = true
+properties/2/watch = false
+properties/3/path = NodePath("Label:text")
+properties/3/spawn = true
+properties/3/sync = true
+properties/3/watch = false
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qtbik"]
+radius = 50.0
+
+[node name="fire_Spirit" type="CharacterBody2D"]
+scale = Vector2(0.8, 0.8)
+script = ExtResource("1_04olc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(0, -15)
+texture = ExtResource("1_hxygy")
+flip_h = true
+hframes = 14
+vframes = 7
+frame = 20
+
+[node name="Collision_Idle" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5)
+shape = SubResource("CapsuleShape2D_j4llt")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "walk"
+libraries = {
+"": SubResource("AnimationLibrary_xqmf8")
+}
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("3_ybn8k")
+estado_inicial = NodePath("lookaround")
+
+[node name="lookaround" type="Node" parent="StateMachine"]
+script = ExtResource("4_oo2kn")
+
+[node name="stalk" type="Node" parent="StateMachine"]
+script = ExtResource("5_f6vik")
+
+[node name="countdown" type="Node" parent="StateMachine"]
+script = ExtResource("6_x2ved")
+
+[node name="explode" type="Node" parent="StateMachine"]
+script = ExtResource("7_6sag5")
+
+[node name="rebirth" type="Node" parent="StateMachine"]
+script = ExtResource("9_xuayx")
+
+[node name="RayCast_1" type="RayCast2D" parent="."]
+visible = false
+position = Vector2(0, 5)
+target_position = Vector2(-100, 80)
+collision_mask = 2048
+
+[node name="RayCast_2" type="RayCast2D" parent="."]
+visible = false
+position = Vector2(0, 5)
+target_position = Vector2(-100, -80)
+collision_mask = 2048
+
+[node name="RayCast_3" type="RayCast2D" parent="."]
+visible = false
+position = Vector2(0, 5)
+target_position = Vector2(-130, 40)
+collision_mask = 2048
+
+[node name="RayCast_4" type="RayCast2D" parent="."]
+visible = false
+position = Vector2(0, 5)
+target_position = Vector2(-130, -40)
+collision_mask = 2048
+
+[node name="RayCast_5" type="RayCast2D" parent="."]
+visible = false
+position = Vector2(0, 5)
+target_position = Vector2(-150, 0)
+collision_mask = 2048
+
+[node name="Collision_Attack" type="CollisionShape2D" parent="."]
+position = Vector2(0, -10)
+shape = SubResource("CircleShape2D_023ph")
+disabled = true
+
+[node name="perception" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="perception"]
+position = Vector2(0, -6.25)
+scale = Vector2(1.08107, 0.630479)
+shape = SubResource("CircleShape2D_kquu3")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -20.0
+offset_top = -48.75
+offset_right = 20.0
+offset_bottom = -25.75
+
+[node name="lookaroundwait" type="Timer" parent="."]
+wait_time = 0.6
+one_shot = true
+
+[node name="countdown" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_v670a")
+
+[node name="explosionArea" type="Area2D" parent="."]
+
+[node name="Collision_Explosion" type="CollisionShape2D" parent="explosionArea"]
+position = Vector2(0, -20)
+shape = SubResource("CircleShape2D_qtbik")
+disabled = true
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="body_entered" from="perception" to="." method="_on_perception_body_entered"]
+[connection signal="timeout" from="lookaroundwait" to="StateMachine/lookaround" method="_on_lookaroundwait_timeout"]
+[connection signal="timeout" from="countdown" to="StateMachine/countdown" method="_on_countdown_timeout"]
+[connection signal="body_entered" from="explosionArea" to="." method="_on_explosion_area_body_entered"]

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwoi81568svnu"]
+
+[ext_resource type="Script" path="res://Scripts/items_Scripts/floor.gd" id="1_ss6ts"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xpuej"]
+
+[node name="floor" type="StaticBody2D"]
+script = ExtResource("1_ss6ts")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xpuej")

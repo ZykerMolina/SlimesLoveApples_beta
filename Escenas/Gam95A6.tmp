@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://grh76br0fues"]
+
+[ext_resource type="Script" path="res://Scripts/Level_Manager.gd" id="1_insf7"]
+[ext_resource type="PackedScene" uid="uid://dicutu4xwo3x6" path="res://Escenas/Levels/nivel_1.tscn" id="1_v0cf7"]
+[ext_resource type="Script" path="res://addons/godot_resource_groups/resource_group.gd" id="2_3h4qg"]
+[ext_resource type="PackedScene" uid="uid://jdfq4w01514t" path="res://Escenas/slime_player.tscn" id="2_lynkq"]
+
+[sub_resource type="Resource" id="Resource_51bph"]
+resource_local_to_scene = true
+script = ExtResource("2_3h4qg")
+base_folder = "res://Escenas/Levels"
+includes = Array[String]([])
+excludes = Array[String]([])
+paths = Array[String]([])
+
+[node name="Game" type="Node2D"]
+
+[node name="Level_Manager" type="Node2D" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("1_insf7")
+player = NodePath("../Slime_player")
+levels_resource_group = SubResource("Resource_51bph")
+
+[node name="Nivel_1" parent="Level_Manager" node_paths=PackedStringArray("player_initial_position_marker2D") instance=ExtResource("1_v0cf7")]
+player_initial_position_marker2D = NodePath("../../Slime_player")
+
+[node name="Slime_player" parent="." instance=ExtResource("2_lynkq")]
+position = Vector2(135.568, 166.751)
+
+[node name="Settings" type="Node2D" parent="."]
+
+[node name="GUI" type="CanvasLayer" parent="."]

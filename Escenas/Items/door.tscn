@@ -1,0 +1,97 @@
+[gd_scene load_steps=9 format=3 uid="uid://3jhhv0ol7ilm"]
+
+[ext_resource type="Script" path="res://Scripts/items_Scripts/door.gd" id="1_h4ew4"]
+[ext_resource type="Texture2D" uid="uid://djt0s51xynqga" path="res://Recursos/Sprites/11-Door/Opening (46x56).png" id="1_v2vg7"]
+
+[sub_resource type="Animation" id="Animation_epvxi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_eqwkw"]
+resource_name = "close"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [3, 2, 1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_wma5d"]
+resource_name = "idle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_ys6xx"]
+resource_name = "open"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nafgs"]
+_data = {
+"RESET": SubResource("Animation_epvxi"),
+"close": SubResource("Animation_eqwkw"),
+"idle": SubResource("Animation_wma5d"),
+"open": SubResource("Animation_ys6xx")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uutmn"]
+size = Vector2(5, 49)
+
+[node name="Door" type="Area2D"]
+script = ExtResource("1_h4ew4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_v2vg7")
+hframes = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_nafgs")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.5, 3.5)
+shape = SubResource("RectangleShape2D_uutmn")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

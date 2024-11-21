@@ -1,0 +1,58 @@
+[gd_scene load_steps=11 format=3 uid="uid://grh76br0fues"]
+
+[ext_resource type="Script" path="res://Scripts/Level_Manager.gd" id="1_insf7"]
+[ext_resource type="Resource" uid="uid://dtpcqb8o7ubie" path="res://resource_group_scene.tres" id="2_bufwm"]
+[ext_resource type="PackedScene" uid="uid://jdfq4w01514t" path="res://Escenas/slime_player.tscn" id="2_lynkq"]
+[ext_resource type="PackedScene" uid="uid://dicutu4xwo3x6" path="res://Escenas/Levels/level_1.tscn" id="3_yey0f"]
+[ext_resource type="PackedScene" uid="uid://db1yet0kcumu7" path="res://Escenas/Items/apple.tscn" id="5_03kqg"]
+[ext_resource type="PackedScene" uid="uid://d2klqp75vvf4o" path="res://Escenas/Items/chest.tscn" id="6_25wdb"]
+[ext_resource type="PackedScene" uid="uid://3jhhv0ol7ilm" path="res://Escenas/Items/door.tscn" id="7_87ep4"]
+[ext_resource type="AudioStream" uid="uid://st0v3x5atlpy" path="res://Recursos/sonidos/background.mp3" id="7_x31ms"]
+[ext_resource type="AudioStream" uid="uid://cs74rknl2ypu3" path="res://Recursos/sonidos/background_bass.mp3" id="8_38pgk"]
+[ext_resource type="AudioStream" uid="uid://dd0vqhokngryr" path="res://Recursos/sonidos/background_weird.mp3" id="9_a3ock"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Slime_player" parent="." instance=ExtResource("2_lynkq")]
+position = Vector2(2.75076, 0.563606)
+
+[node name="Level_Manager" type="Node2D" parent="."]
+script = ExtResource("1_insf7")
+levels_resource_group = ExtResource("2_bufwm")
+instanceLevel = ExtResource("3_yey0f")
+player = null
+
+[node name="Settings" type="Node2D" parent="."]
+
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="Items" type="Node" parent="."]
+
+[node name="apple" parent="Items" instance=ExtResource("5_03kqg")]
+position = Vector2(-747.659, -591.356)
+
+[node name="chest" parent="Items" instance=ExtResource("6_25wdb")]
+position = Vector2(-750.833, -591.356)
+
+[node name="Door" parent="Items" instance=ExtResource("7_87ep4")]
+position = Vector2(-752.421, -596.118)
+
+[node name="Sonidos" type="Node" parent="."]
+
+[node name="background1" type="AudioStreamPlayer2D" parent="Sonidos"]
+stream = ExtResource("7_x31ms")
+volume_db = -1.874
+
+[node name="backgroundbass" type="AudioStreamPlayer2D" parent="Sonidos"]
+stream = ExtResource("8_38pgk")
+volume_db = 2.811
+
+[node name="backgroundweird" type="AudioStreamPlayer2D" parent="Sonidos"]
+stream = ExtResource("9_a3ock")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Escenas/slime_player.tscn", "res://Escenas/Levels/level_1.tscn")
+spawn_path = NodePath("..")
+
+[connection signal="body_entered" from="Items/apple" to="Slime_player" method="_on_apple_body_entered"]
+[connection signal="finished" from="Sonidos/backgroundbass" to="Level_Manager" method="_on_backgroundbass_finished"]

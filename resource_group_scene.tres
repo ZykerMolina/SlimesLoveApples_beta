@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ResourceGroup" load_steps=2 format=3 uid="uid://dtpcqb8o7ubie"]
+
+[ext_resource type="Script" path="res://addons/godot_resource_groups/resource_group.gd" id="1_vcqn4"]
+
+[resource]
+script = ExtResource("1_vcqn4")
+base_folder = "res://Escenas/Levels"
+includes = Array[String]([])
+excludes = Array[String]([])
+paths = Array[String](["res://Escenas/Levels/level_1.tscn", "res://Escenas/Levels/level_2.tscn", "res://Escenas/Levels/level_3.tscn", "res://Escenas/Levels/level_4.tscn", "res://Escenas/Levels/level_Final.tscn", "res://Escenas/Levels/lobby.tscn"])

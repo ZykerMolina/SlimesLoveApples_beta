@@ -1,0 +1,72 @@
+[gd_scene load_steps=8 format=3 uid="uid://b25myvjjybtli"]
+
+[ext_resource type="Script" path="res://Scripts/level_Scripts/gameOver.gd" id="1_ii7vb"]
+[ext_resource type="Texture2D" uid="uid://cx1qsqa4qwsus" path="res://Recursos/Assets_PixelAdventure/Parallax/parallax-00.png" id="2_4m774"]
+[ext_resource type="TileSet" uid="uid://03q4hlnvggcw" path="res://Recursos/TilesMap_Saved/TileMap_Forest.tres" id="3_04aol"]
+[ext_resource type="FontFile" uid="uid://bgijmn0kby47d" path="res://Recursos/Assets_PixelAdventure/Fonts/Kenney Pixel Square.ttf" id="5_7kj6f"]
+[ext_resource type="AudioStream" uid="uid://dd0vqhokngryr" path="res://Recursos/sonidos/background_weird.mp3" id="6_67f8w"]
+[ext_resource type="AudioStream" uid="uid://d2x2di2busrsf" path="res://Recursos/sonidos/tap.mp3" id="7_aepbg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_x8cgg"]
+line_spacing = 4.0
+font = ExtResource("5_7kj6f")
+outline_size = 4
+outline_color = Color(0.00784314, 0.00392157, 0.00392157, 1)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_ii7vb")
+
+[node name="Background" type="Node" parent="."]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Background"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Background/ParallaxBackground"]
+position = Vector2(138, 53)
+scale = Vector2(0.5, 0.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/ParallaxBackground/ParallaxLayer"]
+texture = ExtResource("2_4m774")
+
+[node name="TileMap" type="TileMap" parent="Background"]
+position = Vector2(138, 53)
+tile_set = ExtResource("3_04aol")
+format = 2
+layer_0/tile_data = PackedInt32Array(131063, 524288, 3, 131064, 524288, 3, 131065, 524288, 3, 131066, 589824, 3, 131067, 655360, 3, 131068, 524288, 3, 131069, 589824, 3, 131070, 655360, 3, 131071, 524288, 3, 65536, 589824, 3)
+
+[node name="Buttons" type="Node" parent="."]
+
+[node name="Aceptar" type="Button" parent="Buttons"]
+offset_left = 35.0
+offset_top = 56.0
+offset_right = 220.0
+offset_bottom = 88.0
+scale = Vector2(0.4, 0.4)
+theme_override_fonts/font = ExtResource("5_7kj6f")
+text = "Aceptar"
+text_overrun_behavior = 1
+
+[node name="Labels" type="Node" parent="."]
+
+[node name="Label" type="Label" parent="Labels"]
+offset_left = 10.0
+offset_top = 27.0
+offset_right = 214.0
+offset_bottom = 55.0
+scale = Vector2(0.6, 0.6)
+text = "GameOver"
+label_settings = SubResource("LabelSettings_x8cgg")
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(71, 40)
+zoom = Vector2(3, 3)
+
+[node name="background" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_67f8w")
+
+[node name="select" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_aepbg")
+
+[connection signal="ready" from="Background" to="." method="_on_background_ready"]
+[connection signal="pressed" from="Buttons/Aceptar" to="." method="_on_aceptar_pressed"]
